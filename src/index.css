@@ -26,18 +26,4 @@ body {
     top: 0;
     width: 100%;
   }
-  
-  .fullscreen-preview-modal .ant-modal-content {
-    box-shadow: none;
-  }
-  
-  .fullscreen-preview-modal .ant-modal-header,
-  .fullscreen-preview-modal .ant-modal-footer,
-  .fullscreen-preview-modal .ant-modal-close {
-    display: none;
-  }
-  
-  .fullscreen-preview-modal .ant-modal-body {
-    padding: 0;
-  }
 }

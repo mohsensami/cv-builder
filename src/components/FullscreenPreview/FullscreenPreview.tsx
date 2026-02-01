@@ -1,58 +1,92 @@
-import { Modal, Button, Space } from 'antd'
-import { PrinterOutlined, CloseOutlined } from '@ant-design/icons'
+import { useEffect, useRef } from 'react'
+import { Button, Space } from 'antd'
+import { PrinterOutlined, FullscreenExitOutlined } from '@ant-design/icons'
 import { CVData } from '../../types/cv.types'
 import CVPreviewContent from '../CVPreviewContent/CVPreviewContent'
 
 interface FullscreenPreviewProps {
-  open: boolean
-  onClose: () => void
   cvData: CVData
+  onExit: () => void
 }
 
-const FullscreenPreview = ({ open, onClose, cvData }: FullscreenPreviewProps) => {
+const FullscreenPreview = ({ cvData, onExit }: FullscreenPreviewProps) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const enterFullscreen = async () => {
+      if (containerRef.current) {
+        try {
+          await containerRef.current.requestFullscreen()
+        } catch (error) {
+          console.error('Error entering fullscreen:', error)
+        }
+      }
+    }
+
+    enterFullscreen()
+
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement) {
+        onExit()
+      }
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
+  }, [onExit])
+
   const handlePrint = () => {
     window.print()
   }
 
+  const handleExitFullscreen = async () => {
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen()
+      }
+    } catch (error) {
+      console.error('Error exiting fullscreen:', error)
+    }
+    onExit()
+  }
+
   return (
-    <Modal
-      open={open}
-      onCancel={onClose}
-      footer={null}
-      width="90%"
-      style={{ top: 20 }}
-      className="fullscreen-preview-modal"
-      closeIcon={<CloseOutlined />}
+    <div
+      ref={containerRef}
+      className="w-full h-screen bg-gray-50 flex flex-col"
     >
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold text-gray-700">
-            پیش‌نمایش رزومه
-          </h2>
-          <Space>
-            <Button
-              icon={<PrinterOutlined />}
-              onClick={handlePrint}
-              type="primary"
-              size="large"
-            >
-              پرینت
-            </Button>
-            <Button
-              icon={<CloseOutlined />}
-              onClick={onClose}
-              size="large"
-            >
-              بستن
-            </Button>
-          </Space>
-        </div>
-        
-        <div className="bg-white rounded-lg p-8 border border-gray-200 shadow-sm print-content">
+      <div className="flex justify-between items-center p-6 bg-white shadow-sm border-b border-gray-200">
+        <h2 className="text-2xl font-semibold text-gray-700">
+          پیش‌نمایش رزومه
+        </h2>
+        <Space>
+          <Button
+            icon={<PrinterOutlined />}
+            onClick={handlePrint}
+            type="primary"
+            size="large"
+          >
+            پرینت
+          </Button>
+          <Button
+            icon={<FullscreenExitOutlined />}
+            onClick={handleExitFullscreen}
+            size="large"
+          >
+            خروج از تمام صفحه
+          </Button>
+        </Space>
+      </div>
+      
+      <div className="flex-1 overflow-auto p-8">
+        <div className="bg-white rounded-lg p-8 border border-gray-200 shadow-sm print-content max-w-4xl mx-auto">
           <CVPreviewContent cvData={cvData} />
         </div>
       </div>
-    </Modal>
+    </div>
   )
 }
 

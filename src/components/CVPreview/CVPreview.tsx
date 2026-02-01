@@ -10,52 +10,48 @@ interface CVPreviewProps {
 }
 
 const CVPreview = ({ cvData }: CVPreviewProps) => {
-  const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const handlePrint = () => {
     window.print()
   }
 
   const handleFullscreen = () => {
-    setIsFullscreenOpen(true)
+    setIsFullscreen(true)
+  }
+
+  if (isFullscreen) {
+    return <FullscreenPreview cvData={cvData} onExit={() => setIsFullscreen(false)} />
   }
 
   return (
-    <>
-      <div className="space-y-4">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold text-gray-700">
-            پیش‌نمایش رزومه
-          </h2>
-          <Space>
-            <Button
-              icon={<FullscreenOutlined />}
-              onClick={handleFullscreen}
-              type="default"
-            >
-              تمام صفحه
-            </Button>
-            <Button
-              icon={<PrinterOutlined />}
-              onClick={handlePrint}
-              type="primary"
-            >
-              پرینت
-            </Button>
-          </Space>
-        </div>
-        
-        <div className="bg-gray-50 rounded-lg p-6 min-h-[400px] border border-gray-200 print-content">
-          <CVPreviewContent cvData={cvData} />
-        </div>
+    <div className="space-y-4 h-full flex flex-col">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-semibold text-gray-700">
+          پیش‌نمایش رزومه
+        </h2>
+        <Space>
+          <Button
+            icon={<FullscreenOutlined />}
+            onClick={handleFullscreen}
+            type="default"
+          >
+            تمام صفحه
+          </Button>
+          <Button
+            icon={<PrinterOutlined />}
+            onClick={handlePrint}
+            type="primary"
+          >
+            پرینت
+          </Button>
+        </Space>
       </div>
-
-      <FullscreenPreview
-        open={isFullscreenOpen}
-        onClose={() => setIsFullscreenOpen(false)}
-        cvData={cvData}
-      />
-    </>
+      
+      <div className="bg-gray-50 rounded-lg p-6 flex-1 border border-gray-200 print-content overflow-auto">
+        <CVPreviewContent cvData={cvData} />
+      </div>
+    </div>
   )
 }
 
