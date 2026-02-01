@@ -1,38 +1,61 @@
+import { useState } from 'react'
+import { Button, Space } from 'antd'
+import { FullscreenOutlined, PrinterOutlined } from '@ant-design/icons'
 import { CVData } from '../../types/cv.types'
+import FullscreenPreview from '../FullscreenPreview/FullscreenPreview'
+import CVPreviewContent from '../CVPreviewContent/CVPreviewContent'
 
 interface CVPreviewProps {
   cvData: CVData
 }
 
 const CVPreview = ({ cvData }: CVPreviewProps) => {
+  const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
+
+  const handlePrint = () => {
+    window.print()
+  }
+
+  const handleFullscreen = () => {
+    setIsFullscreenOpen(true)
+  }
+
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-6">
-        پیش‌نمایش رزومه
-      </h2>
-      
-      <div className="bg-gray-50 rounded-lg p-6 min-h-[400px] border border-gray-200">
-        <div className="space-y-4">
-          <div className="border-b border-gray-300 pb-4">
-            <h1 className="text-3xl font-bold text-gray-800">
-              {cvData.firstName || 'نام'} {cvData.lastName || 'نام خانوادگی'}
-            </h1>
-          </div>
-          
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-gray-700">اطلاعات شخصی</h3>
-            <div className="text-gray-600 space-y-1">
-              <p>
-                <span className="font-medium">نام:</span> {cvData.firstName || '-'}
-              </p>
-              <p>
-                <span className="font-medium">نام خانوادگی:</span> {cvData.lastName || '-'}
-              </p>
-            </div>
-          </div>
+    <>
+      <div className="space-y-4">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-semibold text-gray-700">
+            پیش‌نمایش رزومه
+          </h2>
+          <Space>
+            <Button
+              icon={<FullscreenOutlined />}
+              onClick={handleFullscreen}
+              type="default"
+            >
+              تمام صفحه
+            </Button>
+            <Button
+              icon={<PrinterOutlined />}
+              onClick={handlePrint}
+              type="primary"
+            >
+              پرینت
+            </Button>
+          </Space>
+        </div>
+        
+        <div className="bg-gray-50 rounded-lg p-6 min-h-[400px] border border-gray-200 print-content">
+          <CVPreviewContent cvData={cvData} />
         </div>
       </div>
-    </div>
+
+      <FullscreenPreview
+        open={isFullscreenOpen}
+        onClose={() => setIsFullscreenOpen(false)}
+        cvData={cvData}
+      />
+    </>
   )
 }
 

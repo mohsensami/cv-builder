@@ -10,3 +10,36 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  .print-content,
+  .print-content * {
+    visibility: visible;
+  }
+  
+  .print-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  
+  .fullscreen-preview-modal .ant-modal-content {
+    box-shadow: none;
+  }
+  
+  .fullscreen-preview-modal .ant-modal-header,
+  .fullscreen-preview-modal .ant-modal-footer,
+  .fullscreen-preview-modal .ant-modal-close {
+    display: none;
+  }
+  
+  .fullscreen-preview-modal .ant-modal-body {
+    padding: 0;
+  }
+}
