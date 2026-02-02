@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Button, Space } from 'antd'
 import { PrinterOutlined, FullscreenExitOutlined } from '@ant-design/icons'
-import { useCV } from '../../contexts'
 import CVPreviewContent from '../CVPreviewContent/CVPreviewContent'
 
 interface FullscreenPreviewProps {
