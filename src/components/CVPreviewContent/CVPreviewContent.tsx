@@ -1,15 +1,13 @@
-import { CVData } from '../../types/cv.types'
+import { useCV } from '../../contexts'
 
-interface CVPreviewContentProps {
-  cvData: CVData
-}
+const CVPreviewContent = () => {
+  const { cvData } = useCV()
 
-const CVPreviewContent = ({ cvData }: CVPreviewContentProps) => {
   return (
     <div className="space-y-4">
       <div className="border-b border-gray-300 pb-4">
         <h1 className="text-3xl font-bold text-gray-800">
-          {cvData.firstName || 'نام'} {cvData.lastName || 'نام خانوادگی'}
+           {cvData.fullName || 'نام و نام خانوادگی'}
         </h1>
       </div>
       
@@ -17,10 +15,7 @@ const CVPreviewContent = ({ cvData }: CVPreviewContentProps) => {
         <h3 className="text-lg font-semibold text-gray-700">اطلاعات شخصی</h3>
         <div className="text-gray-600 space-y-1">
           <p>
-            <span className="font-medium">نام:</span> {cvData.firstName || '-'}
-          </p>
-          <p>
-            <span className="font-medium">نام خانوادگی:</span> {cvData.lastName || '-'}
+            <span className="font-medium">نام و نام خانوادگی:</span> {cvData.fullName || '-'}
           </p>
         </div>
       </div>

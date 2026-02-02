@@ -1,4 +1,3 @@
 export interface CVData {
-  firstName: string
-  lastName: string
+  fullName: string
 }

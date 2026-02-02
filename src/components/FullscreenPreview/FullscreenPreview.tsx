@@ -1,15 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { Button, Space } from 'antd'
 import { PrinterOutlined, FullscreenExitOutlined } from '@ant-design/icons'
-import { CVData } from '../../types/cv.types'
+import { useCV } from '../../contexts'
 import CVPreviewContent from '../CVPreviewContent/CVPreviewContent'
 
 interface FullscreenPreviewProps {
-  cvData: CVData
   onExit: () => void
 }
 
-const FullscreenPreview = ({ cvData, onExit }: FullscreenPreviewProps) => {
+const FullscreenPreview = ({ onExit }: FullscreenPreviewProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -83,7 +82,7 @@ const FullscreenPreview = ({ cvData, onExit }: FullscreenPreviewProps) => {
       
       <div className="flex-1 overflow-auto p-8">
         <div className="bg-white rounded-lg p-8 border border-gray-200 shadow-sm print-content max-w-4xl mx-auto">
-          <CVPreviewContent cvData={cvData} />
+          <CVPreviewContent />
         </div>
       </div>
     </div>

@@ -1,15 +1,10 @@
 import { useState } from 'react'
 import { Button, Space } from 'antd'
 import { FullscreenOutlined, PrinterOutlined } from '@ant-design/icons'
-import { CVData } from '../../types/cv.types'
 import FullscreenPreview from '../FullscreenPreview/FullscreenPreview'
 import CVPreviewContent from '../CVPreviewContent/CVPreviewContent'
 
-interface CVPreviewProps {
-  cvData: CVData
-}
-
-const CVPreview = ({ cvData }: CVPreviewProps) => {
+const CVPreview = () => {
   const [isFullscreen, setIsFullscreen] = useState(false)
 
   const handlePrint = () => {
@@ -21,7 +16,7 @@ const CVPreview = ({ cvData }: CVPreviewProps) => {
   }
 
   if (isFullscreen) {
-    return <FullscreenPreview cvData={cvData} onExit={() => setIsFullscreen(false)} />
+    return <FullscreenPreview onExit={() => setIsFullscreen(false)} />
   }
 
   return (
@@ -49,7 +44,7 @@ const CVPreview = ({ cvData }: CVPreviewProps) => {
       </div>
       
       <div className="bg-gray-50 rounded-lg p-6 flex-1 border border-gray-200 print-content overflow-auto">
-        <CVPreviewContent cvData={cvData} />
+        <CVPreviewContent />
       </div>
     </div>
   )
