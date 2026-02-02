@@ -17,6 +17,12 @@ const CVPreviewContent = () => {
           <p>
             <span className="font-medium">نام و نام خانوادگی:</span> {cvData.fullName || '-'}
           </p>
+          <p>
+            <span className="font-medium">تلفن تماس:</span> {cvData.phone || '-'}
+          </p>
+          <p>
+            <span className="font-medium">ایمیل:</span> {cvData.email || '-'}
+          </p>
         </div>
       </div>
     </div>

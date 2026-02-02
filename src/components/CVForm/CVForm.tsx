@@ -33,16 +33,39 @@ const CVForm = () => {
         autoComplete="off"
       >
 
-        <Form.Item
+<div className='lg:grid lg:grid-cols-3 gap-2 w-100'>
+    <Form.Item
           label="نام و نام خانوادگی"
           name="fullName"
-          rules={[{ required: false, message: 'لطفا نام و نام خانوادگی خود را وارد کنید' }]}
+          rules={[{ required: true, message: 'لطفا نام و نام خانوادگی خود را وارد کنید' }]}
         >
           <Input 
             placeholder="نام و نام خانوادگی خود را وارد کنید"
             size="large"
           />
         </Form.Item>
+        <Form.Item
+          label="تلفن تماس"
+          name="phone"
+          rules={[{ required: true, message: 'لطفا تلفن تماس خود را وارد کنید' }]}
+        >
+          <Input 
+            placeholder="تلفن تماس خود را وارد کنید"
+            size="large"
+          />
+        </Form.Item>
+        <Form.Item
+          label="ایمیل"
+          name="email"
+          rules={[{ required: true, message: 'لطفا ایمیل خود را وارد کنید' }]}
+        >
+          <Input 
+            placeholder="ایمیل خود را وارد کنید"
+            size="large"
+          />
+        </Form.Item>
+</div>
+        
       </Form>
     </div>
   )

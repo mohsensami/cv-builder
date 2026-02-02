@@ -13,6 +13,8 @@ const CVContext = createContext<CVContextType | undefined>(undefined)
 
 const initialCVData: CVData = {
   fullName: '',
+  phone: '',
+  email: '',
 }
 
 interface CVProviderProps {
