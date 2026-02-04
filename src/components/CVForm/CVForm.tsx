@@ -1,36 +1,76 @@
-import { Form, Input } from 'antd'
-import { useEffect } from 'react'
+import { Form, Input, Button, message } from 'antd'
+import { SaveOutlined } from '@ant-design/icons'
+import { useState, useEffect } from 'react'
 import { useCV } from '../../contexts'
+import { CVData } from '../../types/cv.types'
 import WorkExperienceForm from '../WorkExperienceForm/WorkExperienceForm'
 
 const CVForm = () => {
-  const { cvData, updateCVData } = useCV()
+  const { cvData, setCVData } = useCV()
   const [form] = Form.useForm()
+  const [hasChanges, setHasChanges] = useState(false)
 
+  // Load data from context when it changes (but not from form changes)
   useEffect(() => {
-    form.setFieldsValue(cvData)
-  }, [cvData, form])
-
-  const handleValuesChange = (_: any, allValues: typeof cvData) => {
-    Object.keys(allValues).forEach((key) => {
-      const field = key as keyof typeof cvData
-      if (allValues[field] !== undefined && field !== 'workExperiences') {
-        updateCVData(field, allValues[field] as string)
-      }
+    form.setFieldsValue({
+      fullName: cvData.fullName,
+      phone: cvData.phone,
+      email: cvData.email,
     })
+    setHasChanges(false)
+  }, [cvData.fullName, cvData.phone, cvData.email, form])
+
+  const handleValuesChange = () => {
+    setHasChanges(true)
+  }
+
+  const handleSave = async () => {
+    try {
+      const values = await form.validateFields()
+      const updatedData: Partial<CVData> = {
+        fullName: values.fullName || '',
+        phone: values.phone || '',
+        email: values.email || '',
+      }
+      
+      setCVData((prev) => ({
+        ...prev,
+        ...updatedData,
+      }))
+      
+      setHasChanges(false)
+      message.success('اطلاعات با موفقیت ذخیره شد')
+    } catch (error) {
+      message.error('لطفا تمام فیلدهای الزامی را پر کنید')
+    }
   }
 
   return (
     <div className="space-y-8">
       <div className="space-y-6">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-6">
-          مشخصات فردی
-        </h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-semibold text-gray-700">
+            مشخصات فردی
+          </h2>
+          <Button
+            type="primary"
+            icon={<SaveOutlined />}
+            onClick={handleSave}
+            disabled={!hasChanges}
+            size="large"
+          >
+            ذخیره
+          </Button>
+        </div>
         
         <Form
           form={form}
           layout="vertical"
-          initialValues={cvData}
+          initialValues={{
+            fullName: cvData.fullName,
+            phone: cvData.phone,
+            email: cvData.email,
+          }}
           onValuesChange={handleValuesChange}
           autoComplete="off"
         >
@@ -58,7 +98,10 @@ const CVForm = () => {
             <Form.Item
               label="ایمیل"
               name="email"
-              rules={[{ required: true, message: 'لطفا ایمیل خود را وارد کنید' }]}
+              rules={[
+                { required: true, message: 'لطفا ایمیل خود را وارد کنید' },
+                { type: 'email', message: 'لطفا یک ایمیل معتبر وارد کنید' }
+              ]}
             >
               <Input 
                 placeholder="ایمیل خود را وارد کنید"

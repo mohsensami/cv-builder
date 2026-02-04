@@ -1,26 +1,43 @@
-import { Form, Input, Button } from 'antd'
-import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
-import { useEffect } from 'react'
+import { Form, Input, Button, message } from 'antd'
+import { PlusOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons'
+import { useState, useEffect } from 'react'
 import { useCV } from '../../contexts'
+import { WorkExperience } from '../../types/cv.types'
 
 const WorkExperienceForm = () => {
   const { cvData, setCVData } = useCV()
   const [form] = Form.useForm()
+  const [hasChanges, setHasChanges] = useState(false)
 
+  // Load data from context when it changes (but not from form changes)
   useEffect(() => {
     form.setFieldsValue({ workExperiences: cvData.workExperiences })
+    setHasChanges(false)
   }, [cvData.workExperiences, form])
 
-  const handleValuesChange = (_: any, allValues: { workExperiences?: typeof cvData.workExperiences }) => {
-    if (allValues.workExperiences) {
+  const handleValuesChange = () => {
+    setHasChanges(true)
+  }
+
+  const handleSave = async () => {
+    try {
+      const values = await form.validateFields()
+      const workExperiences: WorkExperience[] = values.workExperiences || []
+      
       // Filter out undefined or null values
-      const validExperiences = allValues.workExperiences.filter(
+      const validExperiences = workExperiences.filter(
         (exp) => exp && typeof exp === 'object'
       )
+      
       setCVData((prev) => ({
         ...prev,
         workExperiences: validExperiences,
       }))
+      
+      setHasChanges(false)
+      message.success('تجربه‌های کاری با موفقیت ذخیره شد')
+    } catch (error) {
+      message.error('لطفا تمام فیلدهای الزامی را پر کنید')
     }
   }
 
@@ -30,6 +47,15 @@ const WorkExperienceForm = () => {
         <h2 className="text-2xl font-semibold text-gray-700">
           تجربه‌های کاری
         </h2>
+        <Button
+          type="primary"
+          icon={<SaveOutlined />}
+          onClick={handleSave}
+          disabled={!hasChanges}
+          size="large"
+        >
+          ذخیره
+        </Button>
       </div>
 
       <Form
@@ -55,7 +81,10 @@ const WorkExperienceForm = () => {
                       type="text"
                       danger
                       icon={<DeleteOutlined />}
-                      onClick={() => remove(name)}
+                      onClick={() => {
+                        remove(name)
+                        setHasChanges(true)
+                      }}
                       size="small"
                     >
                       حذف
@@ -113,7 +142,10 @@ const WorkExperienceForm = () => {
               <Form.Item>
                 <Button
                   type="dashed"
-                  onClick={() => add({ title: '', date: '', position: '' })}
+                  onClick={() => {
+                    add({ title: '', date: '', position: '' })
+                    setHasChanges(true)
+                  }}
                   block
                   icon={<PlusOutlined />}
                   size="large"
