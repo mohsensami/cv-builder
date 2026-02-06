@@ -1,5 +1,6 @@
 import { useCV } from '../../contexts'
 import WorkExperiencePreview from '../WorkExperiencePreview/WorkExperiencePreview'
+import EducationPreview from '../EducationPreview/EducationPreview'
 
 const CVPreviewContent = () => {
   const { cvData } = useCV()
@@ -30,6 +31,12 @@ const CVPreviewContent = () => {
       {cvData.workExperiences && cvData.workExperiences.length > 0 && (
         <div className="border-t border-gray-200 pt-6">
           <WorkExperiencePreview />
+        </div>
+      )}
+
+      {cvData.educationRecords && cvData.educationRecords.length > 0 && (
+        <div className="border-t border-gray-200 pt-6">
+          <EducationPreview />
         </div>
       )}
     </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useCV } from '../../contexts'
 import { CVData } from '../../types/cv.types'
 import WorkExperienceForm from '../WorkExperienceForm/WorkExperienceForm'
+import EducationForm from '../EducationForm/EducationForm'
 
 const CVForm = () => {
   const { cvData, setCVData } = useCV()
@@ -123,6 +124,15 @@ const CVForm = () => {
           children: (
             <div className="pt-2">
               <WorkExperienceForm />
+            </div>
+          ),
+        },
+        {
+          key: 'education-records',
+          label: 'سوابق تحصیلی',
+          children: (
+            <div className="pt-2">
+              <EducationForm />
             </div>
           ),
         },

@@ -1,10 +1,10 @@
 import { createContext, useContext, ReactNode, useMemo, useEffect, useRef } from 'react'
-import { CVData, WorkExperience } from '../types/cv.types'
+import { CVData, WorkExperience, EducationRecord } from '../types/cv.types'
 import useLocalStorage from '../hooks/useLocalStorage'
 
 interface CVContextType {
   cvData: CVData
-  updateCVData: (field: keyof CVData, value: string | WorkExperience[]) => void
+  updateCVData: (field: keyof CVData, value: string | WorkExperience[] | EducationRecord[]) => void
   setCVData: (data: CVData | ((prev: CVData) => CVData)) => void
   resetCVData: () => void
   addWorkExperience: () => void
@@ -19,6 +19,7 @@ const initialCVData: CVData = {
   phone: '',
   email: '',
   workExperiences: [],
+  educationRecords: [],
 }
 
 interface CVProviderProps {
@@ -34,6 +35,7 @@ const migrateCVData = (data: any): CVData => {
       phone: data.phone || '',
       email: data.email || '',
       workExperiences: Array.isArray(data.workExperiences) ? data.workExperiences : [],
+      educationRecords: Array.isArray(data.educationRecords) ? data.educationRecords : [],
     }
   }
   
@@ -46,6 +48,7 @@ const migrateCVData = (data: any): CVData => {
       phone: data.phone || '',
       email: data.email || '',
       workExperiences: [],
+      educationRecords: [],
     }
   }
   
@@ -61,7 +64,12 @@ export const CVProvider = ({ children }: CVProviderProps) => {
   
   // Sync migrated data back to storage if it was migrated (only once)
   useEffect(() => {
-    if (!migrationDone.current && storedData && typeof storedData === 'object' && !('workExperiences' in storedData)) {
+    if (!migrationDone.current && storedData && typeof storedData === 'object') {
+      const needsMigration = !('workExperiences' in storedData) || !('educationRecords' in storedData)
+      if (!needsMigration) {
+        return
+      }
+
       migrationDone.current = true
       setStoredData(cvData)
     }
@@ -72,7 +80,7 @@ export const CVProvider = ({ children }: CVProviderProps) => {
     setStoredData(newData)
   }
 
-  const updateCVData = (field: keyof CVData, value: string | WorkExperience[]) => {
+  const updateCVData = (field: keyof CVData, value: string | WorkExperience[] | EducationRecord[]) => {
     setCVData((prev) => ({
       ...prev,
       [field]: value,
