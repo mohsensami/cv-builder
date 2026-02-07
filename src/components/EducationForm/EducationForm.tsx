@@ -1,67 +1,30 @@
-import { Form, Input, Button, message } from 'antd'
-import { PlusOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons'
-import { useState, useEffect } from 'react'
-import { useCV } from '../../contexts'
+﻿import { Form, Input, Button } from 'antd'
+import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
+import { FormInstance } from 'antd/es/form'
 import { EducationRecord } from '../../types/cv.types'
 
-const EducationForm = () => {
-  const { cvData, setCVData } = useCV()
-  const [form] = Form.useForm()
-  const [hasChanges, setHasChanges] = useState(false)
+interface EducationFormProps {
+  form: FormInstance
+  value: EducationRecord[]
+  onChange: (nextValue: EducationRecord[]) => void
+}
 
-  // Load data from context when it changes (but not from form changes)
-  useEffect(() => {
-    form.setFieldsValue({ educationRecords: cvData.educationRecords })
-    setHasChanges(false)
-  }, [cvData.educationRecords, form])
-
-  const handleValuesChange = () => {
-    setHasChanges(true)
-  }
-
-  const handleSave = async () => {
-    try {
-      const values = await form.validateFields()
-      const educationRecords: EducationRecord[] = values.educationRecords || []
-
-      const validRecords = educationRecords.filter(
-        (record) => record && typeof record === 'object'
-      )
-
-      setCVData((prev) => ({
-        ...prev,
-        educationRecords: validRecords,
-      }))
-
-      setHasChanges(false)
-      message.success('سوابق تحصیلی با موفقیت ذخیره شد')
-    } catch (error) {
-      message.error('لطفا تمام فیلدهای الزامی را پر کنید')
-    }
-  }
-
+const EducationForm = ({ form, value, onChange }: EducationFormProps) => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold text-gray-700">
           سوابق تحصیلی
         </h2>
-        <Button
-          type="primary"
-          icon={<SaveOutlined />}
-          onClick={handleSave}
-          disabled={!hasChanges}
-          size="large"
-        >
-          ذخیره
-        </Button>
       </div>
 
       <Form
         form={form}
         layout="vertical"
-        initialValues={{ educationRecords: cvData.educationRecords }}
-        onValuesChange={handleValuesChange}
+        initialValues={{ educationRecords: value }}
+        onValuesChange={(_, values) => {
+          onChange(values.educationRecords || [])
+        }}
         autoComplete="off"
       >
         <Form.List name="educationRecords">
@@ -82,7 +45,7 @@ const EducationForm = () => {
                       icon={<DeleteOutlined />}
                       onClick={() => {
                         remove(name)
-                        setHasChanges(true)
+                        onChange(form.getFieldValue('educationRecords') || [])
                       }}
                       size="small"
                     >
@@ -94,9 +57,9 @@ const EducationForm = () => {
                     <Form.Item
                       {...restField}
                       name={[name, 'fieldOfStudy']}
-                      label="نام رشته"
+                      label="رشته تحصیلی"
                       rules={[
-                        { required: true, message: 'لطفا نام رشته را وارد کنید' },
+                        { required: true, message: 'لطفا رشته تحصیلی را وارد کنید' },
                       ]}
                     >
                       <Input
@@ -129,7 +92,7 @@ const EducationForm = () => {
                         ]}
                       >
                         <Input
-                          placeholder="مثال: ۱۳۹۸-۱۴۰۲"
+                          placeholder="مثال: ۱۴۰۰-۱۴۰۴"
                           size="large"
                         />
                       </Form.Item>
@@ -143,7 +106,7 @@ const EducationForm = () => {
                   type="dashed"
                   onClick={() => {
                     add({ fieldOfStudy: '', universityName: '', academicYear: '' })
-                    setHasChanges(true)
+                    onChange(form.getFieldValue('educationRecords') || [])
                   }}
                   block
                   icon={<PlusOutlined />}

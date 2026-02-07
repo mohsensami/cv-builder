@@ -1,10 +1,13 @@
-import { Button, Input, message } from 'antd'
+﻿import { Button, Input, message } from 'antd'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useCV } from '../../contexts'
 
-const SkillsForm = () => {
-  const { cvData, setCVData } = useCV()
+interface SkillsFormProps {
+  skills: string[]
+  onChange: (nextSkills: string[]) => void
+}
+
+const SkillsForm = ({ skills, onChange }: SkillsFormProps) => {
   const [skillInput, setSkillInput] = useState('')
 
   const handleAddSkill = () => {
@@ -14,25 +17,17 @@ const SkillsForm = () => {
       return
     }
 
-    if (cvData.skills.includes(trimmedSkill)) {
-      message.info('این مهارت قبلا اضافه شده است')
+    if (skills.includes(trimmedSkill)) {
+      message.info('این مهارت قبلاً اضافه شده است')
       return
     }
 
-    const updatedSkills = [...cvData.skills, trimmedSkill]
-    setCVData((prev) => ({
-      ...prev,
-      skills: updatedSkills,
-    }))
+    onChange([...skills, trimmedSkill])
     setSkillInput('')
   }
 
   const handleRemoveSkill = (index: number) => {
-    const updatedSkills = cvData.skills.filter((_, i) => i !== index)
-    setCVData((prev) => ({
-      ...prev,
-      skills: updatedSkills,
-    }))
+    onChange(skills.filter((_, i) => i !== index))
   }
 
   return (
@@ -40,10 +35,10 @@ const SkillsForm = () => {
       <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-end">
         <div className="flex-1">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            مهارت جدید
+            نام مهارت
           </label>
           <Input
-            placeholder="مثلا: جاوااسکریپت"
+            placeholder="مثال: برنامه‌نویسی"
             size="large"
             value={skillInput}
             onChange={(event) => setSkillInput(event.target.value)}
@@ -62,12 +57,12 @@ const SkillsForm = () => {
       </div>
 
       <div className="space-y-3">
-        {cvData.skills.length === 0 ? (
+        {skills.length === 0 ? (
           <p className="text-gray-500 text-sm">
             هنوز مهارتی اضافه نشده است
           </p>
         ) : (
-          cvData.skills.map((skill, index) => (
+          skills.map((skill, index) => (
             <div
               key={`${skill}-${index}`}
               className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-gray-50"

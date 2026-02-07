@@ -1,68 +1,30 @@
-import { Form, Input, Button, message } from 'antd'
-import { PlusOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons'
-import { useState, useEffect } from 'react'
-import { useCV } from '../../contexts'
+﻿import { Form, Input, Button } from 'antd'
+import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
+import { FormInstance } from 'antd/es/form'
 import { WorkExperience } from '../../types/cv.types'
 
-const WorkExperienceForm = () => {
-  const { cvData, setCVData } = useCV()
-  const [form] = Form.useForm()
-  const [hasChanges, setHasChanges] = useState(false)
+interface WorkExperienceFormProps {
+  form: FormInstance
+  value: WorkExperience[]
+  onChange: (nextValue: WorkExperience[]) => void
+}
 
-  // Load data from context when it changes (but not from form changes)
-  useEffect(() => {
-    form.setFieldsValue({ workExperiences: cvData.workExperiences })
-    setHasChanges(false)
-  }, [cvData.workExperiences, form])
-
-  const handleValuesChange = () => {
-    setHasChanges(true)
-  }
-
-  const handleSave = async () => {
-    try {
-      const values = await form.validateFields()
-      const workExperiences: WorkExperience[] = values.workExperiences || []
-      
-      // Filter out undefined or null values
-      const validExperiences = workExperiences.filter(
-        (exp) => exp && typeof exp === 'object'
-      )
-      
-      setCVData((prev) => ({
-        ...prev,
-        workExperiences: validExperiences,
-      }))
-      
-      setHasChanges(false)
-      message.success('تجربه‌های کاری با موفقیت ذخیره شد')
-    } catch (error) {
-      message.error('لطفا تمام فیلدهای الزامی را پر کنید')
-    }
-  }
-
+const WorkExperienceForm = ({ form, value, onChange }: WorkExperienceFormProps) => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold text-gray-700">
           تجربه‌های کاری
         </h2>
-        <Button
-          type="primary"
-          icon={<SaveOutlined />}
-          onClick={handleSave}
-          disabled={!hasChanges}
-          size="large"
-        >
-          ذخیره
-        </Button>
       </div>
 
       <Form
         form={form}
         layout="vertical"
-        initialValues={{ workExperiences: cvData.workExperiences }}
-        onValuesChange={handleValuesChange}
+        initialValues={{ workExperiences: value }}
+        onValuesChange={(_, values) => {
+          onChange(values.workExperiences || [])
+        }}
         autoComplete="off"
       >
         <Form.List name="workExperiences">
@@ -83,7 +45,7 @@ const WorkExperienceForm = () => {
                       icon={<DeleteOutlined />}
                       onClick={() => {
                         remove(name)
-                        setHasChanges(true)
+                        onChange(form.getFieldValue('workExperiences') || [])
                       }}
                       size="small"
                     >
@@ -144,7 +106,7 @@ const WorkExperienceForm = () => {
                   type="dashed"
                   onClick={() => {
                     add({ title: '', date: '', position: '' })
-                    setHasChanges(true)
+                    onChange(form.getFieldValue('workExperiences') || [])
                   }}
                   block
                   icon={<PlusOutlined />}
