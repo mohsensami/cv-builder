@@ -16,4 +16,5 @@ export interface CVData {
   email: string
   workExperiences: WorkExperience[]
   educationRecords: EducationRecord[]
+  skills: string[]
 }

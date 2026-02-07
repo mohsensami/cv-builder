@@ -5,6 +5,7 @@ import { useCV } from '../../contexts'
 import { CVData } from '../../types/cv.types'
 import WorkExperienceForm from '../WorkExperienceForm/WorkExperienceForm'
 import EducationForm from '../EducationForm/EducationForm'
+import SkillsForm from '../SkillsForm/SkillsForm'
 
 const CVForm = () => {
   const { cvData, setCVData } = useCV()
@@ -124,6 +125,15 @@ const CVForm = () => {
           children: (
             <div className="pt-2">
               <WorkExperienceForm />
+            </div>
+          ),
+        },
+        {
+          key: 'professional-skills',
+          label: 'مهارت‌های حرفه‌ای',
+          children: (
+            <div className="pt-2">
+              <SkillsForm />
             </div>
           ),
         },

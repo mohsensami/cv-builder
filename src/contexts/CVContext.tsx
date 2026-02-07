@@ -20,6 +20,7 @@ const initialCVData: CVData = {
   email: '',
   workExperiences: [],
   educationRecords: [],
+  skills: [],
 }
 
 interface CVProviderProps {
@@ -36,6 +37,7 @@ const migrateCVData = (data: any): CVData => {
       email: data.email || '',
       workExperiences: Array.isArray(data.workExperiences) ? data.workExperiences : [],
       educationRecords: Array.isArray(data.educationRecords) ? data.educationRecords : [],
+      skills: Array.isArray(data.skills) ? data.skills : [],
     }
   }
   
@@ -49,6 +51,7 @@ const migrateCVData = (data: any): CVData => {
       email: data.email || '',
       workExperiences: [],
       educationRecords: [],
+      skills: Array.isArray(data.skills) ? data.skills : [],
     }
   }
   
@@ -65,7 +68,7 @@ export const CVProvider = ({ children }: CVProviderProps) => {
   // Sync migrated data back to storage if it was migrated (only once)
   useEffect(() => {
     if (!migrationDone.current && storedData && typeof storedData === 'object') {
-      const needsMigration = !('workExperiences' in storedData) || !('educationRecords' in storedData)
+      const needsMigration = !('workExperiences' in storedData) || !('educationRecords' in storedData) || !('skills' in storedData)
       if (!needsMigration) {
         return
       }
@@ -80,7 +83,7 @@ export const CVProvider = ({ children }: CVProviderProps) => {
     setStoredData(newData)
   }
 
-  const updateCVData = (field: keyof CVData, value: string | WorkExperience[] | EducationRecord[]) => {
+  const updateCVData = (field: keyof CVData, value: string | WorkExperience[] | EducationRecord[] | string[]) => {
     setCVData((prev) => ({
       ...prev,
       [field]: value,
