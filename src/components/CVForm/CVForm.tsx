@@ -15,12 +15,6 @@ const CVForm = () => {
   const [educationForm] = Form.useForm()
   
   // Local state for all form data
-  const [personalDraft, setPersonalDraft] = useState({
-    fullName: cvData.fullName,
-    phone: cvData.phone,
-    email: cvData.email,
-    aboutMe: cvData.aboutMe,
-  })
   const [workExperiencesDraft, setWorkExperiencesDraft] = useState<WorkExperience[]>(cvData.workExperiences)
   const [educationRecordsDraft, setEducationRecordsDraft] = useState<EducationRecord[]>(cvData.educationRecords)
   const [skillsDraft, setSkillsDraft] = useState<string[]>(cvData.skills)
@@ -32,16 +26,11 @@ const CVForm = () => {
       fullName: cvData.fullName,
       phone: cvData.phone,
       email: cvData.email,
+      aboutMe: cvData.aboutMe,
     })
     workForm.setFieldsValue({ workExperiences: cvData.workExperiences })
     educationForm.setFieldsValue({ educationRecords: cvData.educationRecords })
     
-    setPersonalDraft({
-      fullName: cvData.fullName,
-      phone: cvData.phone,
-      email: cvData.email,
-      aboutMe: cvData.aboutMe,
-    })
     setWorkExperiencesDraft(cvData.workExperiences)
     setEducationRecordsDraft(cvData.educationRecords)
     setSkillsDraft(cvData.skills)
@@ -50,6 +39,7 @@ const CVForm = () => {
     cvData.fullName,
     cvData.phone,
     cvData.email,
+    cvData.aboutMe,
     cvData.workExperiences,
     cvData.educationRecords,
     cvData.skills,
@@ -65,9 +55,9 @@ const CVForm = () => {
       const workValues = await workForm.validateFields()
       const educationValues = await educationForm.validateFields()
 
-      // Get current form values (in case validation passed but form wasn't updated)
-      const currentWorkExperiences = workForm.getFieldValue('workExperiences') || workExperiencesDraft
-      const currentEducationRecords = educationForm.getFieldValue('educationRecords') || educationRecordsDraft
+      // Get validated form values
+      const currentWorkExperiences = workValues.workExperiences || workExperiencesDraft
+      const currentEducationRecords = educationValues.educationRecords || educationRecordsDraft
 
       // Filter out invalid entries
       const workExperiences: WorkExperience[] = currentWorkExperiences.filter(
@@ -129,13 +119,7 @@ const CVForm = () => {
                     email: cvData.email,
                     aboutMe: cvData.aboutMe,
                   }}
-                  onValuesChange={(_, values) => {
-                    setPersonalDraft({
-                      fullName: values.fullName || '',
-                      phone: values.phone || '',
-                      email: values.email || '',
-                      aboutMe: values.aboutMe || '',
-                    })
+                  onValuesChange={() => {
                     setHasChanges(true)
                   }}
                   autoComplete="off"
