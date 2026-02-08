@@ -26,6 +26,9 @@ const CVPreviewContent = () => {
           <p>
             <span className="font-medium">ایمیل:</span> {cvData.email || '-'}
           </p>
+          <p>
+            <span className="font-medium">درباره‌ی من:</span> {cvData.aboutMe || '-'}
+          </p>
         </div>
       </div>
 

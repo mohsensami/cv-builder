@@ -14,6 +14,7 @@ export interface CVData {
   fullName: string
   phone: string
   email: string
+  aboutMe: string
   workExperiences: WorkExperience[]
   educationRecords: EducationRecord[]
   skills: string[]

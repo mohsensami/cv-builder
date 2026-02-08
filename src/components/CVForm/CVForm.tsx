@@ -6,6 +6,7 @@ import { CVData, WorkExperience, EducationRecord } from '../../types/cv.types'
 import WorkExperienceForm from '../WorkExperienceForm/WorkExperienceForm'
 import EducationForm from '../EducationForm/EducationForm'
 import SkillsForm from '../SkillsForm/SkillsForm'
+import TextArea from 'antd/es/input/TextArea'
 
 const CVForm = () => {
   const { cvData, setCVData } = useCV()
@@ -18,6 +19,7 @@ const CVForm = () => {
     fullName: cvData.fullName,
     phone: cvData.phone,
     email: cvData.email,
+    aboutMe: cvData.aboutMe,
   })
   const [workExperiencesDraft, setWorkExperiencesDraft] = useState<WorkExperience[]>(cvData.workExperiences)
   const [educationRecordsDraft, setEducationRecordsDraft] = useState<EducationRecord[]>(cvData.educationRecords)
@@ -38,6 +40,7 @@ const CVForm = () => {
       fullName: cvData.fullName,
       phone: cvData.phone,
       email: cvData.email,
+      aboutMe: cvData.aboutMe,
     })
     setWorkExperiencesDraft(cvData.workExperiences)
     setEducationRecordsDraft(cvData.educationRecords)
@@ -79,6 +82,7 @@ const CVForm = () => {
         fullName: personalValues.fullName || '',
         phone: personalValues.phone || '',
         email: personalValues.email || '',
+        aboutMe: personalValues.aboutMe || '',
         workExperiences,
         educationRecords,
         skills: skillsDraft,
@@ -123,12 +127,14 @@ const CVForm = () => {
                     fullName: cvData.fullName,
                     phone: cvData.phone,
                     email: cvData.email,
+                    aboutMe: cvData.aboutMe,
                   }}
                   onValuesChange={(_, values) => {
                     setPersonalDraft({
                       fullName: values.fullName || '',
                       phone: values.phone || '',
                       email: values.email || '',
+                      aboutMe: values.aboutMe || '',
                     })
                     setHasChanges(true)
                   }}
@@ -169,6 +175,17 @@ const CVForm = () => {
                       />
                     </Form.Item>
                   </div>
+                    <Form.Item
+                      label="درباره‌ی من"
+                      name="aboutMe"
+                      rules={[
+                        { required: true, message: 'لطفا درباره‌ی من  خود را وارد کنید' },
+                        { type: 'string', message: 'لطفا یک درباره‌ی من  معتبر وارد کنید' }
+                      ]}
+                    >
+                     <TextArea placeholder="از شخصیت و ویژگی‌های حرفه‌ای و شخصی خود بنویسید..."
+                        size="large" rows={4} className='w-full' />
+                    </Form.Item>
                 </Form>
               </div>
             ),
