@@ -10,6 +10,13 @@ export interface EducationRecord {
   academicYear: string
 }
 
+export type LanguageLevel = 'beginner' | 'intermediate' | 'advanced'
+
+export interface LanguageSkill {
+  name: string
+  level: LanguageLevel
+}
+
 export interface CVData {
   fullName: string
   phone: string
@@ -18,4 +25,5 @@ export interface CVData {
   workExperiences: WorkExperience[]
   educationRecords: EducationRecord[]
   skills: string[]
+  languages: LanguageSkill[]
 }

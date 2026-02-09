@@ -1,10 +1,13 @@
 import { createContext, useContext, ReactNode, useMemo, useEffect, useRef } from 'react'
-import { CVData, WorkExperience, EducationRecord } from '../types/cv.types'
+import { CVData, WorkExperience, EducationRecord, LanguageSkill } from '../types/cv.types'
 import useLocalStorage from '../hooks/useLocalStorage'
 
 interface CVContextType {
   cvData: CVData
-  updateCVData: (field: keyof CVData, value: string | WorkExperience[] | EducationRecord[]) => void
+  updateCVData: (
+    field: keyof CVData,
+    value: string | WorkExperience[] | EducationRecord[] | string[] | LanguageSkill[]
+  ) => void
   setCVData: (data: CVData | ((prev: CVData) => CVData)) => void
   resetCVData: () => void
   addWorkExperience: () => void
@@ -22,6 +25,7 @@ const initialCVData: CVData = {
   workExperiences: [],
   educationRecords: [],
   skills: [],
+   languages: [],
 }
 
 interface CVProviderProps {
@@ -40,6 +44,7 @@ const migrateCVData = (data: any): CVData => {
       workExperiences: Array.isArray(data.workExperiences) ? data.workExperiences : [],
       educationRecords: Array.isArray(data.educationRecords) ? data.educationRecords : [],
       skills: Array.isArray(data.skills) ? data.skills : [],
+      languages: Array.isArray(data.languages) ? data.languages : [],
     }
   }
   
@@ -55,6 +60,7 @@ const migrateCVData = (data: any): CVData => {
       workExperiences: [],
       educationRecords: [],
       skills: Array.isArray(data.skills) ? data.skills : [],
+      languages: Array.isArray(data.languages) ? data.languages : [],
     }
   }
   
@@ -71,7 +77,11 @@ export const CVProvider = ({ children }: CVProviderProps) => {
   // Sync migrated data back to storage if it was migrated (only once)
   useEffect(() => {
     if (!migrationDone.current && storedData && typeof storedData === 'object') {
-      const needsMigration = !('workExperiences' in storedData) || !('educationRecords' in storedData) || !('skills' in storedData)
+      const needsMigration =
+        !('workExperiences' in storedData) ||
+        !('educationRecords' in storedData) ||
+        !('skills' in storedData) ||
+        !('languages' in storedData)
       if (!needsMigration) {
         return
       }

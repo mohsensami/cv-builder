@@ -2,10 +2,11 @@
 import { SaveOutlined } from '@ant-design/icons'
 import { useState, useEffect } from 'react'
 import { useCV } from '../../contexts'
-import { CVData, WorkExperience, EducationRecord } from '../../types/cv.types'
+import { CVData, WorkExperience, EducationRecord, LanguageSkill } from '../../types/cv.types'
 import WorkExperienceForm from '../WorkExperienceForm/WorkExperienceForm'
 import EducationForm from '../EducationForm/EducationForm'
 import SkillsForm from '../SkillsForm/SkillsForm'
+import LanguagesForm from '../LanguagesForm/LanguagesForm'
 import TextArea from 'antd/es/input/TextArea'
 
 const CVForm = () => {
@@ -18,6 +19,7 @@ const CVForm = () => {
   const [workExperiencesDraft, setWorkExperiencesDraft] = useState<WorkExperience[]>(cvData.workExperiences)
   const [educationRecordsDraft, setEducationRecordsDraft] = useState<EducationRecord[]>(cvData.educationRecords)
   const [skillsDraft, setSkillsDraft] = useState<string[]>(cvData.skills)
+  const [languagesDraft, setLanguagesDraft] = useState<LanguageSkill[]>(cvData.languages)
   const [hasChanges, setHasChanges] = useState(false)
 
   // Load data from context when it changes externally
@@ -34,6 +36,7 @@ const CVForm = () => {
     setWorkExperiencesDraft(cvData.workExperiences)
     setEducationRecordsDraft(cvData.educationRecords)
     setSkillsDraft(cvData.skills)
+    setLanguagesDraft(cvData.languages)
     setHasChanges(false)
   }, [
     cvData.fullName,
@@ -43,6 +46,7 @@ const CVForm = () => {
     cvData.workExperiences,
     cvData.educationRecords,
     cvData.skills,
+    cvData.languages,
     form,
     workForm,
     educationForm,
@@ -76,6 +80,7 @@ const CVForm = () => {
         workExperiences,
         educationRecords,
         skills: skillsDraft,
+        languages: languagesDraft,
       }
 
       // Save to context (which will save to localStorage)
@@ -199,6 +204,21 @@ const CVForm = () => {
                   skills={skillsDraft}
                   onChange={(nextSkills) => {
                     setSkillsDraft(nextSkills)
+                    setHasChanges(true)
+                  }}
+                />
+              </div>
+            ),
+          },
+          {
+            key: 'languages',
+            label: 'زبان‌های مسلط',
+            children: (
+              <div className="pt-2">
+                <LanguagesForm
+                  languages={languagesDraft}
+                  onChange={(nextLanguages) => {
+                    setLanguagesDraft(nextLanguages)
                     setHasChanges(true)
                   }}
                 />

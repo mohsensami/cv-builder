@@ -2,6 +2,7 @@
 import WorkExperiencePreview from '../WorkExperiencePreview/WorkExperiencePreview'
 import EducationPreview from '../EducationPreview/EducationPreview'
 import SkillsPreview from '../SkillsPreview/SkillsPreview'
+import LanguagesPreview from '../LanguagesPreview/LanguagesPreview'
 
 const CVPreviewContent = () => {
   const { cvData } = useCV()
@@ -41,6 +42,12 @@ const CVPreviewContent = () => {
       {cvData.skills && cvData.skills.length > 0 && (
         <div className="border-t border-gray-200 pt-6">
           <SkillsPreview />
+        </div>
+      )}
+
+      {cvData.languages && cvData.languages.length > 0 && (
+        <div className="border-t border-gray-200 pt-6">
+          <LanguagesPreview />
         </div>
       )}
 
