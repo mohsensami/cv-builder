@@ -96,7 +96,7 @@ export const CVProvider = ({ children }: CVProviderProps) => {
     setStoredData(newData)
   }
 
-  const updateCVData = (field: keyof CVData, value: string | WorkExperience[] | EducationRecord[] | string[]) => {
+  const updateCVData = (field: keyof CVData, value: string | WorkExperience[] | EducationRecord[] | string[] | LanguageSkill[]) => {
     setCVData((prev) => ({
       ...prev,
       [field]: value,
