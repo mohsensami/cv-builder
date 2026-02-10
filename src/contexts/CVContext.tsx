@@ -109,7 +109,7 @@ export const CVProvider = ({ children }: CVProviderProps) => {
   const cvData: CVData = allData[language]
 
   const setCVData = (data: CVData | ((prev: CVData) => CVData)) => {
-    setStoredData((prevStorage) => {
+    setStoredData((prevStorage: unknown) => {
       const current = migrateStorage(prevStorage)
       const currentForLanguage = current[language]
       const nextForLanguage =
