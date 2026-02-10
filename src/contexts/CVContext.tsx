@@ -1,6 +1,7 @@
-import { createContext, useContext, ReactNode, useMemo, useEffect, useRef } from 'react'
+import { createContext, useContext, ReactNode, useMemo } from 'react'
 import { CVData, WorkExperience, EducationRecord, LanguageSkill } from '../types/cv.types'
 import useLocalStorage from '../hooks/useLocalStorage'
+import { useLanguage, AppLanguage } from './LanguageContext'
 
 interface CVContextType {
   cvData: CVData
@@ -25,14 +26,16 @@ const initialCVData: CVData = {
   workExperiences: [],
   educationRecords: [],
   skills: [],
-   languages: [],
+  languages: [],
 }
+
+type CVStorage = Record<AppLanguage, CVData>
 
 interface CVProviderProps {
   children: ReactNode
 }
 
-// Helper function to migrate old data structure to new one
+// Helper function to migrate old data structure for a single language
 const migrateCVData = (data: any): CVData => {
   // If data already has the new structure, return it
   if (data && typeof data === 'object' && 'workExperiences' in data) {
@@ -67,33 +70,56 @@ const migrateCVData = (data: any): CVData => {
   return initialCVData
 }
 
-export const CVProvider = ({ children }: CVProviderProps) => {
-  const [storedData, setStoredData] = useLocalStorage<any>('cv-data', initialCVData)
-  const migrationDone = useRef(false)
-  
-  // Migrate data on load
-  const cvData: CVData = useMemo(() => migrateCVData(storedData), [storedData])
-  
-  // Sync migrated data back to storage if it was migrated (only once)
-  useEffect(() => {
-    if (!migrationDone.current && storedData && typeof storedData === 'object') {
-      const needsMigration =
-        !('workExperiences' in storedData) ||
-        !('educationRecords' in storedData) ||
-        !('skills' in storedData) ||
-        !('languages' in storedData)
-      if (!needsMigration) {
-        return
-      }
+const createInitialStorage = (): CVStorage => ({
+  fa: initialCVData,
+  en: initialCVData,
+})
 
-      migrationDone.current = true
-      setStoredData(cvData)
+// Normalize any shape from localStorage into our multi-language storage
+const migrateStorage = (data: any): CVStorage => {
+  if (!data || typeof data !== 'object') {
+    return createInitialStorage()
+  }
+
+  // Already in multi-language shape
+  if ('fa' in data || 'en' in data) {
+    return {
+      fa: migrateCVData((data as CVStorage).fa),
+      en: migrateCVData((data as CVStorage).en),
     }
-  }, [storedData, cvData, setStoredData])
-  
+  }
+
+  // Legacy single-language data: use it for Farsi, start English empty
+  const migrated = migrateCVData(data)
+  return {
+    fa: migrated,
+    en: initialCVData,
+  }
+}
+
+export const CVProvider = ({ children }: CVProviderProps) => {
+  const { language } = useLanguage()
+  const [storedData, setStoredData] = useLocalStorage<any>('cv-data', createInitialStorage())
+
+  const allData: CVStorage = useMemo(
+    () => migrateStorage(storedData),
+    [storedData],
+  )
+
+  const cvData: CVData = allData[language]
+
   const setCVData = (data: CVData | ((prev: CVData) => CVData)) => {
-    const newData = typeof data === 'function' ? data(cvData) : data
-    setStoredData(newData)
+    setStoredData((prevStorage) => {
+      const current = migrateStorage(prevStorage)
+      const currentForLanguage = current[language]
+      const nextForLanguage =
+        typeof data === 'function' ? (data as (prev: CVData) => CVData)(currentForLanguage) : data
+
+      return {
+        ...current,
+        [language]: nextForLanguage,
+      }
+    })
   }
 
   const updateCVData = (field: keyof CVData, value: string | WorkExperience[] | EducationRecord[] | string[] | LanguageSkill[]) => {

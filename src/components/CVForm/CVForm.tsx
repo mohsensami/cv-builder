@@ -1,4 +1,4 @@
-﻿import { Form, Input, Button, message, Collapse } from 'antd'
+import { Form, Input, Button, message, Collapse } from 'antd'
 import { SaveOutlined } from '@ant-design/icons'
 import { useState, useEffect } from 'react'
 import { useCV } from '../../contexts'
@@ -7,6 +7,7 @@ import WorkExperienceForm from '../WorkExperienceForm/WorkExperienceForm'
 import EducationForm from '../EducationForm/EducationForm'
 import SkillsForm from '../SkillsForm/SkillsForm'
 import LanguagesForm from '../LanguagesForm/LanguagesForm'
+import LanguageSwitcher from '../LanguageSwitcher'
 import TextArea from 'antd/es/input/TextArea'
 
 const CVForm = () => {
@@ -94,7 +95,8 @@ const CVForm = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end items-center mb-4">
+      <div className="flex flex-col gap-3 mb-4 sm:flex-row sm:items-center sm:justify-between">
+        <LanguageSwitcher size="small" showLabel={false} />
         <Button
           type="primary"
           icon={<SaveOutlined />}
