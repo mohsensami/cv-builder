@@ -1,7 +1,9 @@
 import { useCV } from '../../contexts'
+import useTranslations from '../../hooks/useTranslations'
 
 const WorkExperiencePreview = () => {
   const { cvData } = useCV()
+  const t = useTranslations()
 
   if (!cvData.workExperiences || cvData.workExperiences.length === 0) {
     return null
@@ -19,7 +21,7 @@ const WorkExperiencePreview = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-gray-700 border-b border-gray-300 pb-2">
-        تجربه‌های کاری
+        {t.previewWorkExperienceTitle}
       </h3>
       <div className="space-y-4">
         {validExperiences.map((experience, index) => (
@@ -29,14 +31,20 @@ const WorkExperiencePreview = () => {
           >
             <div className="space-y-2">
               <h4 className="text-lg font-semibold text-gray-800">
-                {experience?.title || 'عنوان شغل'}
+                {experience?.title || t.previewWorkExperienceFallbackJobTitle}
               </h4>
               <div className="text-gray-600 space-y-1">
                 <p>
-                  <span className="font-medium">سمت:</span> {experience?.position || '-'}
+                  <span className="font-medium">
+                    {t.previewWorkExperienceLabelPosition}
+                  </span>{' '}
+                  {experience?.position || '-'}
                 </p>
                 <p>
-                  <span className="font-medium">تاریخ:</span> {experience?.date || '-'}
+                  <span className="font-medium">
+                    {t.previewWorkExperienceLabelDate}
+                  </span>{' '}
+                  {experience?.date || '-'}
                 </p>
               </div>
             </div>

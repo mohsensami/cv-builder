@@ -9,9 +9,11 @@ import SkillsForm from '../SkillsForm/SkillsForm'
 import LanguagesForm from '../LanguagesForm/LanguagesForm'
 import LanguageSwitcher from '../LanguageSwitcher'
 import TextArea from 'antd/es/input/TextArea'
+import useTranslations from '../../hooks/useTranslations'
 
 const CVForm = () => {
   const { cvData, setCVData } = useCV()
+  const t = useTranslations()
   const [form] = Form.useForm()
   const [workForm] = Form.useForm()
   const [educationForm] = Form.useForm()
@@ -87,9 +89,9 @@ const CVForm = () => {
       // Save to context (which will save to localStorage)
       setCVData(updatedData)
       setHasChanges(false)
-      message.success('اطلاعات با موفقیت ذخیره شد')
+      message.success(t.formSaveSuccess)
     } catch (error) {
-      message.error('لطفا تمام فیلدهای الزامی را پر کنید')
+      message.error(t.formSaveErrorRequired)
     }
   }
 
@@ -104,7 +106,7 @@ const CVForm = () => {
           disabled={!hasChanges}
           size="large"
         >
-          ذخیره همه اطلاعات
+          {t.formSaveAll}
         </Button>
       </div>
 
@@ -114,7 +116,7 @@ const CVForm = () => {
         items={[
           {
             key: 'personal-info',
-            label: 'مشخصات فردی',
+            label: t.formSectionPersonalInfo,
             children: (
               <div className="space-y-6">
                 <Form
@@ -133,49 +135,53 @@ const CVForm = () => {
                 >
                   <div className='lg:grid lg:grid-cols-3 gap-2 w-100'>
                     <Form.Item
-                      label="نام و نام خانوادگی"
+                      label={t.formFullNameLabel}
                       name="fullName"
-                      rules={[{ required: true, message: 'لطفا نام و نام خانوادگی خود را وارد کنید' }]}
+                      rules={[{ required: true, message: t.formFullNameRequired }]}
                     >
                       <Input
-                        placeholder="نام و نام خانوادگی خود را وارد کنید"
+                        placeholder={t.formFullNamePlaceholder}
                         size="large"
                       />
                     </Form.Item>
                     <Form.Item
-                      label="تلفن تماس"
+                      label={t.formPhoneLabel}
                       name="phone"
-                      rules={[{ required: true, message: 'لطفا تلفن تماس خود را وارد کنید' }]}
+                      rules={[{ required: true, message: t.formPhoneRequired }]}
                     >
                       <Input
-                        placeholder="تلفن تماس خود را وارد کنید"
+                        placeholder={t.formPhonePlaceholder}
                         size="large"
                       />
                     </Form.Item>
                     <Form.Item
-                      label="ایمیل"
+                      label={t.formEmailLabel}
                       name="email"
                       rules={[
-                        { required: true, message: 'لطفا ایمیل خود را وارد کنید' },
-                        { type: 'email', message: 'لطفا یک ایمیل معتبر وارد کنید' }
+                        { required: true, message: t.formEmailRequired },
+                        { type: 'email', message: t.formEmailInvalid }
                       ]}
                     >
                       <Input
-                        placeholder="ایمیل خود را وارد کنید"
+                        placeholder={t.formEmailPlaceholder}
                         size="large"
                       />
                     </Form.Item>
                   </div>
                     <Form.Item
-                      label="درباره‌ی من"
+                      label={t.formAboutMeLabel}
                       name="aboutMe"
                       rules={[
-                        { required: true, message: 'لطفا درباره‌ی من  خود را وارد کنید' },
-                        { type: 'string', message: 'لطفا یک درباره‌ی من  معتبر وارد کنید' }
+                        { required: true, message: t.formAboutMeRequired },
+                        { type: 'string', message: t.formAboutMeInvalid }
                       ]}
                     >
-                     <TextArea placeholder="از شخصیت و ویژگی‌های حرفه‌ای و شخصی خود بنویسید..."
-                        size="large" rows={4} className='w-full' />
+                     <TextArea
+                       placeholder={t.formAboutMePlaceholder}
+                       size="large"
+                       rows={4}
+                       className='w-full'
+                     />
                     </Form.Item>
                 </Form>
               </div>
@@ -183,7 +189,7 @@ const CVForm = () => {
           },
           {
             key: 'work-experience',
-            label: 'تجربه‌های کاری',
+            label: t.formSectionWorkExperience,
             children: (
               <div className="pt-2">
                 <WorkExperienceForm
@@ -199,7 +205,7 @@ const CVForm = () => {
           },
           {
             key: 'professional-skills',
-            label: 'مهارت‌های حرفه‌ای',
+            label: t.formSectionSkills,
             children: (
               <div className="pt-2">
                 <SkillsForm
@@ -214,7 +220,7 @@ const CVForm = () => {
           },
           {
             key: 'languages',
-            label: 'زبان‌های مسلط',
+            label: t.formSectionLanguages,
             children: (
               <div className="pt-2">
                 <LanguagesForm
@@ -229,7 +235,7 @@ const CVForm = () => {
           },
           {
             key: 'education-records',
-            label: 'سوابق تحصیلی',
+            label: t.formSectionEducation,
             children: (
               <div className="pt-2">
                 <EducationForm

@@ -1,7 +1,8 @@
-﻿import { Form, Input, Button } from 'antd'
+import { Form, Input, Button } from 'antd'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import { FormInstance } from 'antd/es/form'
 import { WorkExperience } from '../../types/cv.types'
+import useTranslations from '../../hooks/useTranslations'
 
 interface WorkExperienceFormProps {
   form: FormInstance
@@ -10,11 +11,13 @@ interface WorkExperienceFormProps {
 }
 
 const WorkExperienceForm = ({ form, value, onChange }: WorkExperienceFormProps) => {
+  const t = useTranslations()
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold text-gray-700">
-          تجربه‌های کاری
+          {t.workExpFormTitle}
         </h2>
       </div>
 
@@ -37,7 +40,7 @@ const WorkExperienceForm = ({ form, value, onChange }: WorkExperienceFormProps) 
                 >
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-medium text-gray-700">
-                      تجربه کاری {name + 1}
+                  {t.workExpFormItemTitlePrefix} {name + 1}
                     </h3>
                     <Button
                       type="text"
@@ -49,7 +52,7 @@ const WorkExperienceForm = ({ form, value, onChange }: WorkExperienceFormProps) 
                       }}
                       size="small"
                     >
-                      حذف
+                      {t.workExpFormDelete}
                     </Button>
                   </div>
 
@@ -57,13 +60,13 @@ const WorkExperienceForm = ({ form, value, onChange }: WorkExperienceFormProps) 
                     <Form.Item
                       {...restField}
                       name={[name, 'title']}
-                      label="عنوان شغل"
+                      label={t.workExpJobTitleLabel}
                       rules={[
-                        { required: true, message: 'لطفا عنوان شغل را وارد کنید' },
+                        { required: true, message: t.workExpJobTitleRequired },
                       ]}
                     >
                       <Input
-                        placeholder="مثال: توسعه‌دهنده فرانت‌اند"
+                        placeholder={t.workExpJobTitlePlaceholder}
                         size="large"
                       />
                     </Form.Item>
@@ -72,13 +75,13 @@ const WorkExperienceForm = ({ form, value, onChange }: WorkExperienceFormProps) 
                       <Form.Item
                         {...restField}
                         name={[name, 'date']}
-                        label="تاریخ شمسی"
+                        label={t.workExpDateLabel}
                         rules={[
-                          { required: true, message: 'لطفا تاریخ را وارد کنید' },
+                          { required: true, message: t.workExpDateRequired },
                         ]}
                       >
                         <Input
-                          placeholder="مثال: ۱۴۰۲/۰۵/۱۵"
+                          placeholder={t.workExpDatePlaceholder}
                           size="large"
                         />
                       </Form.Item>
@@ -86,13 +89,13 @@ const WorkExperienceForm = ({ form, value, onChange }: WorkExperienceFormProps) 
                       <Form.Item
                         {...restField}
                         name={[name, 'position']}
-                        label="سمت شغلی"
+                        label={t.workExpPositionLabel}
                         rules={[
-                          { required: true, message: 'لطفا سمت شغلی را وارد کنید' },
+                          { required: true, message: t.workExpPositionRequired },
                         ]}
                       >
                         <Input
-                          placeholder="مثال: توسعه‌دهنده React"
+                          placeholder={t.workExpPositionPlaceholder}
                           size="large"
                         />
                       </Form.Item>
@@ -112,7 +115,7 @@ const WorkExperienceForm = ({ form, value, onChange }: WorkExperienceFormProps) 
                   icon={<PlusOutlined />}
                   size="large"
                 >
-                  افزودن تجربه کاری
+                  {t.workExpAddButton}
                 </Button>
               </Form.Item>
             </>
