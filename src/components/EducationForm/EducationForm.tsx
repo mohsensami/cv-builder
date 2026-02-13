@@ -1,7 +1,8 @@
-﻿import { Form, Input, Button } from 'antd'
+import { Form, Input, Button } from 'antd'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import { FormInstance } from 'antd/es/form'
 import { EducationRecord } from '../../types/cv.types'
+import useTranslations from '../../hooks/useTranslations'
 
 interface EducationFormProps {
   form: FormInstance
@@ -10,12 +11,12 @@ interface EducationFormProps {
 }
 
 const EducationForm = ({ form, value, onChange }: EducationFormProps) => {
+  const t = useTranslations()
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold text-gray-700">
-          سوابق تحصیلی
-        </h2>
+        <h2 className="text-2xl font-semibold text-gray-700">{t.educationFormTitle}</h2>
       </div>
 
       <Form
@@ -37,7 +38,7 @@ const EducationForm = ({ form, value, onChange }: EducationFormProps) => {
                 >
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-medium text-gray-700">
-                      سابقه تحصیلی {name + 1}
+                      {t.educationFormItemTitlePrefix} {name + 1}
                     </h3>
                     <Button
                       type="text"
@@ -49,7 +50,7 @@ const EducationForm = ({ form, value, onChange }: EducationFormProps) => {
                       }}
                       size="small"
                     >
-                      حذف
+                      {t.educationFormDelete}
                     </Button>
                   </div>
 
@@ -57,13 +58,13 @@ const EducationForm = ({ form, value, onChange }: EducationFormProps) => {
                     <Form.Item
                       {...restField}
                       name={[name, 'fieldOfStudy']}
-                      label="رشته تحصیلی"
+                      label={t.educationFormFieldOfStudyLabel}
                       rules={[
-                        { required: true, message: 'لطفا رشته تحصیلی را وارد کنید' },
+                        { required: true, message: t.educationFormFieldOfStudyRequired },
                       ]}
                     >
                       <Input
-                        placeholder="مثال: مهندسی کامپیوتر"
+                        placeholder={t.educationFormFieldOfStudyPlaceholder}
                         size="large"
                       />
                     </Form.Item>
@@ -72,13 +73,13 @@ const EducationForm = ({ form, value, onChange }: EducationFormProps) => {
                       <Form.Item
                         {...restField}
                         name={[name, 'universityName']}
-                        label="نام دانشگاه"
+                        label={t.educationFormUniversityNameLabel}
                         rules={[
-                          { required: true, message: 'لطفا نام دانشگاه را وارد کنید' },
+                          { required: true, message: t.educationFormUniversityNameRequired },
                         ]}
                       >
                         <Input
-                          placeholder="مثال: دانشگاه تهران"
+                          placeholder={t.educationFormUniversityNamePlaceholder}
                           size="large"
                         />
                       </Form.Item>
@@ -86,13 +87,13 @@ const EducationForm = ({ form, value, onChange }: EducationFormProps) => {
                       <Form.Item
                         {...restField}
                         name={[name, 'academicYear']}
-                        label="سال تحصیلی"
+                        label={t.educationFormAcademicYearLabel}
                         rules={[
-                          { required: true, message: 'لطفا سال تحصیلی را وارد کنید' },
+                          { required: true, message: t.educationFormAcademicYearRequired },
                         ]}
                       >
                         <Input
-                          placeholder="مثال: ۱۴۰۰-۱۴۰۴"
+                          placeholder={t.educationFormAcademicYearPlaceholder}
                           size="large"
                         />
                       </Form.Item>
@@ -112,7 +113,7 @@ const EducationForm = ({ form, value, onChange }: EducationFormProps) => {
                   icon={<PlusOutlined />}
                   size="large"
                 >
-                  افزودن سابقه تحصیلی
+                  {t.educationFormAddButton}
                 </Button>
               </Form.Item>
             </>

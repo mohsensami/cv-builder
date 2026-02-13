@@ -4,8 +4,10 @@ import { FullscreenOutlined, PrinterOutlined } from '@ant-design/icons'
 import FullscreenPreview from '../FullscreenPreview/FullscreenPreview'
 import CVPreviewContent from '../CVPreviewContent/CVPreviewContent'
 import LanguageSwitcher from '../LanguageSwitcher'
+import useTranslations from '../../hooks/useTranslations'
 
 const CVPreview = () => {
+  const t = useTranslations()
   const [isFullscreen, setIsFullscreen] = useState(false)
 
   const handlePrint = () => {
@@ -24,9 +26,7 @@ const CVPreview = () => {
     <div className="space-y-4 h-full flex flex-col">
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-3">
-          <h2 className="text-2xl font-semibold text-gray-700">
-            پیش‌نمایش رزومه
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-700">{t.previewTitle}</h2>
           <LanguageSwitcher size="small" showLabel={false} />
         </div>
         <Space>
@@ -35,14 +35,14 @@ const CVPreview = () => {
             onClick={handleFullscreen}
             type="default"
           >
-            تمام صفحه
+            {t.previewFullscreenButton}
           </Button>
           <Button
             icon={<PrinterOutlined />}
             onClick={handlePrint}
             type="primary"
           >
-            پرینت
+            {t.previewPrintButton}
           </Button>
         </Space>
       </div>

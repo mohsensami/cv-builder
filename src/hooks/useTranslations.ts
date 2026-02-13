@@ -64,6 +64,67 @@ type AppTranslations = {
   workExpPositionPlaceholder: string
 
   workExpAddButton: string
+
+  // Languages form
+  languagesFormTitle: string
+  languagesFormLanguageNameLabel: string
+  languagesFormLanguageNamePlaceholder: string
+  languagesFormLanguageNameRequired: string
+  languagesFormLevelLabel: string
+  languagesFormAddButton: string
+  languagesFormEmptyMessage: string
+  languagesFormDelete: string
+  languagesFormDuplicateMessage: string
+  languagesLevelBeginner: string
+  languagesLevelIntermediate: string
+  languagesLevelAdvanced: string
+
+  // Languages preview
+  languagesPreviewTitle: string
+
+  // Skills form
+  skillsFormSkillNameLabel: string
+  skillsFormSkillNamePlaceholder: string
+  skillsFormAddButton: string
+  skillsFormEmptyMessage: string
+  skillsFormDelete: string
+  skillsFormSkillNameRequired: string
+  skillsFormDuplicateMessage: string
+
+  // Skills preview
+  skillsPreviewTitle: string
+
+  // Education form
+  educationFormTitle: string
+  educationFormItemTitlePrefix: string
+  educationFormDelete: string
+  educationFormFieldOfStudyLabel: string
+  educationFormFieldOfStudyRequired: string
+  educationFormFieldOfStudyPlaceholder: string
+  educationFormUniversityNameLabel: string
+  educationFormUniversityNameRequired: string
+  educationFormUniversityNamePlaceholder: string
+  educationFormAcademicYearLabel: string
+  educationFormAcademicYearRequired: string
+  educationFormAcademicYearPlaceholder: string
+  educationFormAddButton: string
+
+  // Education preview
+  educationPreviewTitle: string
+  educationPreviewFallbackField: string
+  educationPreviewLabelUniversity: string
+  educationPreviewLabelAcademicYear: string
+
+  // Language switcher
+  languageSwitcherLabel: string
+  languageSwitcherOptionFa: string
+  languageSwitcherOptionEn: string
+
+  // CV Preview
+  previewTitle: string
+  previewFullscreenButton: string
+  previewPrintButton: string
+  previewExitFullscreenButton: string
 }
 
 const TRANSLATIONS: Record<AppLanguage, AppTranslations> = {
@@ -131,6 +192,67 @@ const TRANSLATIONS: Record<AppLanguage, AppTranslations> = {
     workExpPositionPlaceholder: 'مثال: توسعه‌دهنده React',
 
     workExpAddButton: 'افزودن تجربه کاری',
+
+    // Languages form
+    languagesFormTitle: 'زبان‌های مسلط',
+    languagesFormLanguageNameLabel: 'نام زبان',
+    languagesFormLanguageNamePlaceholder: 'مثال: انگلیسی',
+    languagesFormLanguageNameRequired: 'لطفا نام زبان را وارد کنید',
+    languagesFormLevelLabel: 'سطح تسلط',
+    languagesFormAddButton: 'افزودن زبان',
+    languagesFormEmptyMessage: 'هنوز زبانی اضافه نشده است',
+    languagesFormDelete: 'حذف',
+    languagesFormDuplicateMessage: 'این زبان با همین سطح قبلاً اضافه شده است',
+    languagesLevelBeginner: 'مبتدی',
+    languagesLevelIntermediate: 'متوسط',
+    languagesLevelAdvanced: 'پیشرفته',
+
+    // Languages preview
+    languagesPreviewTitle: 'زبان‌های مسلط',
+
+    // Skills form
+    skillsFormSkillNameLabel: 'نام مهارت',
+    skillsFormSkillNamePlaceholder: 'مثال: برنامه‌نویسی',
+    skillsFormAddButton: 'افزودن مهارت',
+    skillsFormEmptyMessage: 'هنوز مهارتی اضافه نشده است',
+    skillsFormDelete: 'حذف',
+    skillsFormSkillNameRequired: 'لطفا نام مهارت را وارد کنید',
+    skillsFormDuplicateMessage: 'این مهارت قبلاً اضافه شده است',
+
+    // Skills preview
+    skillsPreviewTitle: 'مهارت‌های حرفه‌ای',
+
+    // Education form
+    educationFormTitle: 'سوابق تحصیلی',
+    educationFormItemTitlePrefix: 'سابقه تحصیلی',
+    educationFormDelete: 'حذف',
+    educationFormFieldOfStudyLabel: 'رشته تحصیلی',
+    educationFormFieldOfStudyRequired: 'لطفا رشته تحصیلی را وارد کنید',
+    educationFormFieldOfStudyPlaceholder: 'مثال: مهندسی کامپیوتر',
+    educationFormUniversityNameLabel: 'نام دانشگاه',
+    educationFormUniversityNameRequired: 'لطفا نام دانشگاه را وارد کنید',
+    educationFormUniversityNamePlaceholder: 'مثال: دانشگاه تهران',
+    educationFormAcademicYearLabel: 'سال تحصیلی',
+    educationFormAcademicYearRequired: 'لطفا سال تحصیلی را وارد کنید',
+    educationFormAcademicYearPlaceholder: 'مثال: ۱۴۰۰-۱۴۰۴',
+    educationFormAddButton: 'افزودن سابقه تحصیلی',
+
+    // Education preview
+    educationPreviewTitle: 'سوابق تحصیلی',
+    educationPreviewFallbackField: 'نام رشته',
+    educationPreviewLabelUniversity: 'دانشگاه:',
+    educationPreviewLabelAcademicYear: 'سال تحصیلی:',
+
+    // Language switcher
+    languageSwitcherLabel: 'زبان رزومه:',
+    languageSwitcherOptionFa: 'رزومه فارسی',
+    languageSwitcherOptionEn: 'Resume English',
+
+    // CV Preview
+    previewTitle: 'پیش‌نمایش رزومه',
+    previewFullscreenButton: 'تمام صفحه',
+    previewPrintButton: 'پرینت',
+    previewExitFullscreenButton: 'خروج از تمام صفحه',
   },
   en: {
     // CV preview & personal info
@@ -196,6 +318,67 @@ const TRANSLATIONS: Record<AppLanguage, AppTranslations> = {
     workExpPositionPlaceholder: 'e.g. React Developer',
 
     workExpAddButton: 'Add work experience',
+
+    // Languages form
+    languagesFormTitle: 'Languages',
+    languagesFormLanguageNameLabel: 'Language Name',
+    languagesFormLanguageNamePlaceholder: 'e.g. English',
+    languagesFormLanguageNameRequired: 'Please enter a language name',
+    languagesFormLevelLabel: 'Proficiency Level',
+    languagesFormAddButton: 'Add Language',
+    languagesFormEmptyMessage: 'No languages added yet',
+    languagesFormDelete: 'Delete',
+    languagesFormDuplicateMessage: 'This language with the same level has already been added',
+    languagesLevelBeginner: 'Beginner',
+    languagesLevelIntermediate: 'Intermediate',
+    languagesLevelAdvanced: 'Advanced',
+
+    // Languages preview
+    languagesPreviewTitle: 'Languages',
+
+    // Skills form
+    skillsFormSkillNameLabel: 'Skill Name',
+    skillsFormSkillNamePlaceholder: 'e.g. Programming',
+    skillsFormAddButton: 'Add Skill',
+    skillsFormEmptyMessage: 'No skills added yet',
+    skillsFormDelete: 'Delete',
+    skillsFormSkillNameRequired: 'Please enter a skill name',
+    skillsFormDuplicateMessage: 'This skill has already been added',
+
+    // Skills preview
+    skillsPreviewTitle: 'Professional Skills',
+
+    // Education form
+    educationFormTitle: 'Education',
+    educationFormItemTitlePrefix: 'Education Record',
+    educationFormDelete: 'Delete',
+    educationFormFieldOfStudyLabel: 'Field of Study',
+    educationFormFieldOfStudyRequired: 'Please enter a field of study',
+    educationFormFieldOfStudyPlaceholder: 'e.g. Computer Engineering',
+    educationFormUniversityNameLabel: 'University Name',
+    educationFormUniversityNameRequired: 'Please enter a university name',
+    educationFormUniversityNamePlaceholder: 'e.g. University of Tehran',
+    educationFormAcademicYearLabel: 'Academic Year',
+    educationFormAcademicYearRequired: 'Please enter an academic year',
+    educationFormAcademicYearPlaceholder: 'e.g. 2021-2025',
+    educationFormAddButton: 'Add Education Record',
+
+    // Education preview
+    educationPreviewTitle: 'Education',
+    educationPreviewFallbackField: 'Field Name',
+    educationPreviewLabelUniversity: 'University:',
+    educationPreviewLabelAcademicYear: 'Academic Year:',
+
+    // Language switcher
+    languageSwitcherLabel: 'Resume Language:',
+    languageSwitcherOptionFa: 'Persian Resume',
+    languageSwitcherOptionEn: 'English Resume',
+
+    // CV Preview
+    previewTitle: 'Resume Preview',
+    previewFullscreenButton: 'Fullscreen',
+    previewPrintButton: 'Print',
+    previewExitFullscreenButton: 'Exit Fullscreen',
   },
 }
 

@@ -1,25 +1,29 @@
 import { Select } from 'antd'
 import { AppLanguage, useLanguage } from '../../contexts'
+import { useMemo } from 'react'
+import useTranslations from '../../hooks/useTranslations'
 
 interface LanguageSwitcherProps {
   size?: 'small' | 'middle' | 'large'
   showLabel?: boolean
 }
 
-const LANGUAGE_OPTIONS: { value: AppLanguage; label: string }[] = [
-  { value: 'fa', label: 'رزومه فارسی' },
-  { value: 'en', label: 'Resume English' },
-]
-
 const LanguageSwitcher = ({ size = 'middle', showLabel = true }: LanguageSwitcherProps) => {
   const { language, setLanguage } = useLanguage()
+  const t = useTranslations()
+
+  const LANGUAGE_OPTIONS: { value: AppLanguage; label: string }[] = useMemo(
+    () => [
+      { value: 'fa', label: t.languageSwitcherOptionFa },
+      { value: 'en', label: t.languageSwitcherOptionEn },
+    ],
+    [t]
+  )
 
   return (
     <div className="flex items-center gap-2">
       {showLabel && (
-        <span className="text-sm text-gray-600">
-          زبان رزومه:
-        </span>
+        <span className="text-sm text-gray-600">{t.languageSwitcherLabel}</span>
       )}
       <Select<AppLanguage>
         size={size}

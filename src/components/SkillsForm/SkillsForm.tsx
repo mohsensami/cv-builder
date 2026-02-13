@@ -1,6 +1,7 @@
-﻿import { Button, Input, message } from 'antd'
+import { Button, Input, message } from 'antd'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useState } from 'react'
+import useTranslations from '../../hooks/useTranslations'
 
 interface SkillsFormProps {
   skills: string[]
@@ -8,17 +9,18 @@ interface SkillsFormProps {
 }
 
 const SkillsForm = ({ skills, onChange }: SkillsFormProps) => {
+  const t = useTranslations()
   const [skillInput, setSkillInput] = useState('')
 
   const handleAddSkill = () => {
     const trimmedSkill = skillInput.trim()
     if (!trimmedSkill) {
-      message.error('لطفا نام مهارت را وارد کنید')
+      message.error(t.skillsFormSkillNameRequired)
       return
     }
 
     if (skills.includes(trimmedSkill)) {
-      message.info('این مهارت قبلاً اضافه شده است')
+      message.info(t.skillsFormDuplicateMessage)
       return
     }
 
@@ -35,10 +37,10 @@ const SkillsForm = ({ skills, onChange }: SkillsFormProps) => {
       <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-end">
         <div className="flex-1">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            نام مهارت
+            {t.skillsFormSkillNameLabel}
           </label>
           <Input
-            placeholder="مثال: برنامه‌نویسی"
+            placeholder={t.skillsFormSkillNamePlaceholder}
             size="large"
             value={skillInput}
             onChange={(event) => setSkillInput(event.target.value)}
@@ -52,15 +54,13 @@ const SkillsForm = ({ skills, onChange }: SkillsFormProps) => {
           size="large"
           className="lg:w-auto"
         >
-          افزودن مهارت
+          {t.skillsFormAddButton}
         </Button>
       </div>
 
       <div className="space-y-3">
         {skills.length === 0 ? (
-          <p className="text-gray-500 text-sm">
-            هنوز مهارتی اضافه نشده است
-          </p>
+          <p className="text-gray-500 text-sm">{t.skillsFormEmptyMessage}</p>
         ) : (
           skills.map((skill, index) => (
             <div
@@ -75,7 +75,7 @@ const SkillsForm = ({ skills, onChange }: SkillsFormProps) => {
                 onClick={() => handleRemoveSkill(index)}
                 size="small"
               >
-                حذف
+                {t.skillsFormDelete}
               </Button>
             </div>
           ))

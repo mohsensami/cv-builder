@@ -1,7 +1,9 @@
-﻿import { useCV } from '../../contexts'
+import { useCV } from '../../contexts'
+import useTranslations from '../../hooks/useTranslations'
 
 const SkillsPreview = () => {
   const { cvData } = useCV()
+  const t = useTranslations()
 
   if (!cvData.skills || cvData.skills.length === 0) {
     return null
@@ -10,7 +12,7 @@ const SkillsPreview = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-gray-700 border-b border-gray-300 pb-2">
-        مهارت‌های حرفه‌ای
+        {t.skillsPreviewTitle}
       </h3>
       <div className="flex flex-wrap gap-2">
         {cvData.skills.map((skill, index) => (

@@ -1,21 +1,23 @@
 import { useCV } from '../../contexts'
 import { LanguageLevel } from '../../types/cv.types'
-
-const levelToLabel = (level: LanguageLevel): string => {
-  switch (level) {
-    case 'beginner':
-      return 'مبتدی'
-    case 'intermediate':
-      return 'متوسط'
-    case 'advanced':
-      return 'پیشرفته'
-    default:
-      return String(level)
-  }
-}
+import useTranslations from '../../hooks/useTranslations'
 
 const LanguagesPreview = () => {
   const { cvData } = useCV()
+  const t = useTranslations()
+
+  const levelToLabel = (level: LanguageLevel): string => {
+    switch (level) {
+      case 'beginner':
+        return t.languagesLevelBeginner
+      case 'intermediate':
+        return t.languagesLevelIntermediate
+      case 'advanced':
+        return t.languagesLevelAdvanced
+      default:
+        return String(level)
+    }
+  }
 
   if (!cvData.languages || cvData.languages.length === 0) {
     return null
@@ -32,7 +34,7 @@ const LanguagesPreview = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-gray-700 border-b border-gray-300 pb-2">
-        زبان‌های مسلط
+        {t.languagesPreviewTitle}
       </h3>
       <div className="flex flex-wrap gap-2">
         {validLanguages.map((language, index) => (

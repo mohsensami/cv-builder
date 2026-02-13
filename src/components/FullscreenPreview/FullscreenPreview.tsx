@@ -2,12 +2,14 @@ import { useEffect, useRef } from 'react'
 import { Button, Space } from 'antd'
 import { PrinterOutlined, FullscreenExitOutlined } from '@ant-design/icons'
 import CVPreviewContent from '../CVPreviewContent/CVPreviewContent'
+import useTranslations from '../../hooks/useTranslations'
 
 interface FullscreenPreviewProps {
   onExit: () => void
 }
 
 const FullscreenPreview = ({ onExit }: FullscreenPreviewProps) => {
+  const t = useTranslations()
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -57,9 +59,7 @@ const FullscreenPreview = ({ onExit }: FullscreenPreviewProps) => {
       className="w-full h-screen bg-gray-50 flex flex-col"
     >
       <div className="flex justify-between items-center p-6 bg-white shadow-sm border-b border-gray-200">
-        <h2 className="text-2xl font-semibold text-gray-700">
-          پیش‌نمایش رزومه
-        </h2>
+        <h2 className="text-2xl font-semibold text-gray-700">{t.previewTitle}</h2>
         <Space>
           <Button
             icon={<PrinterOutlined />}
@@ -67,14 +67,14 @@ const FullscreenPreview = ({ onExit }: FullscreenPreviewProps) => {
             type="primary"
             size="large"
           >
-            پرینت
+            {t.previewPrintButton}
           </Button>
           <Button
             icon={<FullscreenExitOutlined />}
             onClick={handleExitFullscreen}
             size="large"
           >
-            خروج از تمام صفحه
+            {t.previewExitFullscreenButton}
           </Button>
         </Space>
       </div>

@@ -1,28 +1,33 @@
 import { Button, Input, Select, message } from 'antd'
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { LanguageLevel, LanguageSkill } from '../../types/cv.types'
+import useTranslations from '../../hooks/useTranslations'
 
 interface LanguagesFormProps {
   languages: LanguageSkill[]
   onChange: (nextLanguages: LanguageSkill[]) => void
 }
 
-const LANGUAGE_LEVEL_OPTIONS: { value: LanguageLevel; label: string }[] = [
-  { value: 'beginner', label: 'مبتدی' },
-  { value: 'intermediate', label: 'متوسط' },
-  { value: 'advanced', label: 'پیشرفته' },
-]
-
 const LanguagesForm = ({ languages, onChange }: LanguagesFormProps) => {
+  const t = useTranslations()
   const [languageName, setLanguageName] = useState('')
   const [languageLevel, setLanguageLevel] = useState<LanguageLevel>('intermediate')
+
+  const LANGUAGE_LEVEL_OPTIONS: { value: LanguageLevel; label: string }[] = useMemo(
+    () => [
+      { value: 'beginner', label: t.languagesLevelBeginner },
+      { value: 'intermediate', label: t.languagesLevelIntermediate },
+      { value: 'advanced', label: t.languagesLevelAdvanced },
+    ],
+    [t]
+  )
 
   const handleAddLanguage = () => {
     const trimmedName = languageName.trim()
 
     if (!trimmedName) {
-      message.error('لطفا نام زبان را وارد کنید')
+      message.error(t.languagesFormLanguageNameRequired)
       return
     }
 
@@ -33,7 +38,7 @@ const LanguagesForm = ({ languages, onChange }: LanguagesFormProps) => {
     )
 
     if (isDuplicate) {
-      message.info('این زبان با همین سطح قبلاً اضافه شده است')
+      message.info(t.languagesFormDuplicateMessage)
       return
     }
 
@@ -61,16 +66,16 @@ const LanguagesForm = ({ languages, onChange }: LanguagesFormProps) => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold text-gray-700">زبان‌های مسلط</h2>
+        <h2 className="text-2xl font-semibold text-gray-700">{t.languagesFormTitle}</h2>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-end">
         <div className="flex-1">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            نام زبان
+            {t.languagesFormLanguageNameLabel}
           </label>
           <Input
-            placeholder="مثال: انگلیسی"
+            placeholder={t.languagesFormLanguageNamePlaceholder}
             size="large"
             value={languageName}
             onChange={(event) => setLanguageName(event.target.value)}
@@ -79,7 +84,7 @@ const LanguagesForm = ({ languages, onChange }: LanguagesFormProps) => {
         </div>
         <div className="w-full lg:w-56">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            سطح تسلط
+            {t.languagesFormLevelLabel}
           </label>
           <Select
             size="large"
@@ -96,13 +101,13 @@ const LanguagesForm = ({ languages, onChange }: LanguagesFormProps) => {
           size="large"
           className="lg:w-auto"
         >
-          افزودن زبان
+          {t.languagesFormAddButton}
         </Button>
       </div>
 
       <div className="space-y-3">
         {languages.length === 0 ? (
-          <p className="text-gray-500 text-sm">هنوز زبانی اضافه نشده است</p>
+          <p className="text-gray-500 text-sm">{t.languagesFormEmptyMessage}</p>
         ) : (
           languages.map((language, index) => (
             <div
@@ -122,7 +127,7 @@ const LanguagesForm = ({ languages, onChange }: LanguagesFormProps) => {
                 onClick={() => handleRemoveLanguage(index)}
                 size="small"
               >
-                حذف
+                {t.languagesFormDelete}
               </Button>
             </div>
           ))

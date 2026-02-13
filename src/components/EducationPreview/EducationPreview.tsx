@@ -1,7 +1,9 @@
 import { useCV } from '../../contexts'
+import useTranslations from '../../hooks/useTranslations'
 
 const EducationPreview = () => {
   const { cvData } = useCV()
+  const t = useTranslations()
 
   if (!cvData.educationRecords || cvData.educationRecords.length === 0) {
     return null
@@ -18,7 +20,7 @@ const EducationPreview = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-gray-700 border-b border-gray-300 pb-2">
-        سوابق تحصیلی
+        {t.educationPreviewTitle}
       </h3>
       <div className="space-y-4">
         {validRecords.map((record, index) => (
@@ -28,14 +30,16 @@ const EducationPreview = () => {
           >
             <div className="space-y-2">
               <h4 className="text-lg font-semibold text-gray-800">
-                {record?.fieldOfStudy || 'نام رشته'}
+                {record?.fieldOfStudy || t.educationPreviewFallbackField}
               </h4>
               <div className="text-gray-600 space-y-1">
                 <p>
-                  <span className="font-medium">دانشگاه:</span> {record?.universityName || '-'}
+                  <span className="font-medium">{t.educationPreviewLabelUniversity}</span>{' '}
+                  {record?.universityName || '-'}
                 </p>
                 <p>
-                  <span className="font-medium">سال تحصیلی:</span> {record?.academicYear || '-'}
+                  <span className="font-medium">{t.educationPreviewLabelAcademicYear}</span>{' '}
+                  {record?.academicYear || '-'}
                 </p>
               </div>
             </div>
