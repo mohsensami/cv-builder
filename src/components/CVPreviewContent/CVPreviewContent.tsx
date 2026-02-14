@@ -11,17 +11,17 @@ const CVPreviewContent = () => {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-gray-300 pb-4">
-        <h1 className="text-3xl font-bold text-gray-800">
+      <div className="cv-section-title border-b pb-4">
+        <h1 className="text-3xl font-bold">
           {cvData.fullName || t.previewFullNameFallback}
         </h1>
       </div>
-      
+
       <div className="space-y-2">
-        <h3 className="text-lg font-semibold text-gray-700">
+        <h3 className="text-lg font-semibold">
           {t.previewPersonalInfoTitle}
         </h3>
-        <div className="text-gray-600 space-y-1">
+        <div className="space-y-1 opacity-90">
           <p>
             <span className="font-medium">{t.previewLabelFullName}</span>{' '}
             {cvData.fullName || '-'}
@@ -42,25 +42,25 @@ const CVPreviewContent = () => {
       </div>
 
       {cvData.workExperiences && cvData.workExperiences.length > 0 && (
-        <div className="border-t border-gray-200 pt-6">
+        <div className="cv-section-title border-t pt-6">
           <WorkExperiencePreview />
         </div>
       )}
 
       {cvData.skills && cvData.skills.length > 0 && (
-        <div className="border-t border-gray-200 pt-6">
+        <div className="cv-section-title border-t pt-6">
           <SkillsPreview />
         </div>
       )}
 
       {cvData.languages && cvData.languages.length > 0 && (
-        <div className="border-t border-gray-200 pt-6">
+        <div className="cv-section-title border-t pt-6">
           <LanguagesPreview />
         </div>
       )}
 
       {cvData.educationRecords && cvData.educationRecords.length > 0 && (
-        <div className="border-t border-gray-200 pt-6">
+        <div className="cv-section-title border-t pt-6">
           <EducationPreview />
         </div>
       )}

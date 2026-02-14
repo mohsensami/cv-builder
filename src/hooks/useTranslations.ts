@@ -125,6 +125,15 @@ type AppTranslations = {
   previewFullscreenButton: string
   previewPrintButton: string
   previewExitFullscreenButton: string
+
+  // Theme
+  themeDrawerTitle: string
+  themePageBackground: string
+  themeTextColor: string
+  themeHeadingColor: string
+  themeAccentColor: string
+  themeBorderColor: string
+  themeReset: string
 }
 
 const TRANSLATIONS: Record<AppLanguage, AppTranslations> = {
@@ -253,6 +262,14 @@ const TRANSLATIONS: Record<AppLanguage, AppTranslations> = {
     previewFullscreenButton: 'تمام صفحه',
     previewPrintButton: 'پرینت',
     previewExitFullscreenButton: 'خروج از تمام صفحه',
+
+    themeDrawerTitle: 'رنگ و تم رزومه',
+    themePageBackground: 'پس‌زمینه صفحه',
+    themeTextColor: 'رنگ متن',
+    themeHeadingColor: 'رنگ عناوین',
+    themeAccentColor: 'رنگ تاکید',
+    themeBorderColor: 'رنگ حاشیه',
+    themeReset: 'بازگردانی پیش‌فرض',
   },
   en: {
     // CV preview & personal info
@@ -379,6 +396,14 @@ const TRANSLATIONS: Record<AppLanguage, AppTranslations> = {
     previewFullscreenButton: 'Fullscreen',
     previewPrintButton: 'Print',
     previewExitFullscreenButton: 'Exit Fullscreen',
+
+    themeDrawerTitle: 'Resume theme & colors',
+    themePageBackground: 'Page background',
+    themeTextColor: 'Text color',
+    themeHeadingColor: 'Heading color',
+    themeAccentColor: 'Accent color',
+    themeBorderColor: 'Border color',
+    themeReset: 'Reset to default',
   },
 }
 

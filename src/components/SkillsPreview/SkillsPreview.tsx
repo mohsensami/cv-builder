@@ -11,14 +11,14 @@ const SkillsPreview = () => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-gray-700 border-b border-gray-300 pb-2">
+      <h3 className="text-lg font-semibold cv-section-title border-b pb-2">
         {t.skillsPreviewTitle}
       </h3>
       <div className="flex flex-wrap gap-2">
         {cvData.skills.map((skill, index) => (
           <span
             key={`${skill}-${index}`}
-            className="px-3 py-1 text-sm rounded-full bg-slate-100 text-slate-700 border border-slate-200"
+            className="cv-tag px-3 py-1 text-sm rounded-full border"
           >
             {skill}
           </span>

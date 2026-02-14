@@ -9,6 +9,38 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* CV Theme – applied only inside .cv-themed wrapper */
+.cv-themed,
+.cv-themed .print-content {
+  --cv-bg: #f9fafb;
+  --cv-text: #4b5563;
+  --cv-heading: #1f2937;
+  --cv-accent: #3b82f6;
+  --cv-border: #e5e7eb;
+}
+
+.cv-themed h1,
+.cv-themed h2,
+.cv-themed h3,
+.cv-themed h4 {
+  color: var(--cv-heading) !important;
+}
+
+.cv-themed .cv-section-title {
+  border-bottom-color: var(--cv-border) !important;
+  border-top-color: var(--cv-border) !important;
+}
+
+.cv-themed .cv-accent-border {
+  border-right-color: var(--cv-accent) !important;
+}
+
+.cv-themed .cv-tag {
+  background: color-mix(in srgb, var(--cv-accent) 12%, transparent);
+  color: var(--cv-heading);
+  border-color: color-mix(in srgb, var(--cv-accent) 35%, transparent);
+}
+
 /* Print Styles */
 @media print {
   body * {

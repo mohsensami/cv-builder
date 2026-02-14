@@ -20,20 +20,20 @@ const WorkExperiencePreview = () => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-gray-700 border-b border-gray-300 pb-2">
+      <h3 className="text-lg font-semibold cv-section-title border-b pb-2">
         {t.previewWorkExperienceTitle}
       </h3>
       <div className="space-y-4">
         {validExperiences.map((experience, index) => (
           <div
             key={index}
-            className="border-r-4 border-blue-500 pr-4 pb-4 last:pb-0"
+            className="cv-accent-border border-r-4 pr-4 pb-4 last:pb-0"
           >
             <div className="space-y-2">
-              <h4 className="text-lg font-semibold text-gray-800">
+              <h4 className="text-lg font-semibold">
                 {experience?.title || t.previewWorkExperienceFallbackJobTitle}
               </h4>
-              <div className="text-gray-600 space-y-1">
+              <div className="opacity-90 space-y-1">
                 <p>
                   <span className="font-medium">
                     {t.previewWorkExperienceLabelPosition}

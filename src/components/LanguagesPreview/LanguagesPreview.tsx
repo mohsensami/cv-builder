@@ -33,17 +33,17 @@ const LanguagesPreview = () => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-gray-700 border-b border-gray-300 pb-2">
+      <h3 className="text-lg font-semibold cv-section-title border-b pb-2">
         {t.languagesPreviewTitle}
       </h3>
       <div className="flex flex-wrap gap-2">
         {validLanguages.map((language, index) => (
           <div
             key={`${language.name}-${language.level}-${index}`}
-            className="px-3 py-1 rounded-full bg-purple-50 text-purple-800 border border-purple-200 text-sm flex items-center gap-2"
+            className="cv-tag px-3 py-1 rounded-full border text-sm flex items-center gap-2"
           >
             <span className="font-medium">{language.name}</span>
-            <span className="text-xs text-purple-700">
+            <span className="text-xs opacity-80">
               ({levelToLabel(language.level)})
             </span>
           </div>

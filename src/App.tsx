@@ -1,5 +1,5 @@
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
-import { CVProvider, LanguageProvider } from './contexts'
+import { CVProvider, LanguageProvider, ThemeProvider } from './contexts'
 import CVForm from './components/CVForm/CVForm'
 import CVPreview from './components/CVPreview/CVPreview'
 import LanguageSwitcher from './components/LanguageSwitcher'
@@ -8,6 +8,7 @@ function App() {
   return (
     <LanguageProvider>
       <CVProvider>
+        <ThemeProvider>
         <div className="min-h-screen bg-gray-50">
           <div className="mx-auto px-4 py-8">
             <div className="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">
@@ -38,6 +39,7 @@ function App() {
             </div>
           </div>
         </div>
+        </ThemeProvider>
       </CVProvider>
     </LanguageProvider>
   )

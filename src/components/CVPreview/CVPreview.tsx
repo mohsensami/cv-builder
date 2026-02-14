@@ -4,6 +4,8 @@ import { FullscreenOutlined, PrinterOutlined } from '@ant-design/icons'
 import FullscreenPreview from '../FullscreenPreview/FullscreenPreview'
 import CVPreviewContent from '../CVPreviewContent/CVPreviewContent'
 import LanguageSwitcher from '../LanguageSwitcher'
+import ThemeDrawer from '../ThemeDrawer'
+import ThemePreviewWrapper from '../ThemePreviewWrapper'
 import useTranslations from '../../hooks/useTranslations'
 
 const CVPreview = () => {
@@ -46,10 +48,14 @@ const CVPreview = () => {
           </Button>
         </Space>
       </div>
-      
-      <div className="bg-gray-50 rounded-lg p-6 flex-1 border border-gray-200 print-content overflow-auto">
-        <CVPreviewContent />
+
+      <div className="rounded-lg p-6 flex-1 border border-gray-200 print-content overflow-auto">
+        <ThemePreviewWrapper className="min-h-full rounded-lg p-4">
+          <CVPreviewContent />
+        </ThemePreviewWrapper>
       </div>
+
+      <ThemeDrawer />
     </div>
   )
 }
